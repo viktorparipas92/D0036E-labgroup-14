@@ -8,7 +8,7 @@ from functions import mean
 HOUSING_PATH = 'datasets/housing'
 HISTOGRAM_COLUMNS = {
     'households': '# households',
-    'median_income': 'Med. income [$]',
+    'median_income': 'Med. income',
     'housing_median_age': 'Med. house age [y]',
     'median_house_value': 'Med. value [$]',
 }
@@ -59,7 +59,8 @@ def task_5d(housing_data):
         There is an uptick at the tail end of both the housing_median_age and
         the median_house_value histograms, meaning there is a relatively high 
         number of districts with a median house value/age that is close to the
-        highest median house value/age across the sample.
+        highest median house value/age across the sample. This indicates that 
+        these values are capped.
         
         The fact that there are no outliers in the distribution is mostly thanks
          to handling median values which tend to even out even if individual 
@@ -70,8 +71,17 @@ def task_5d(housing_data):
 
 def task_5e(housing_data):
     print(
-        'The magnitude of the values in the median_house_value column '
-        'seem perfectly reasonable (between $100k and $500k.)'
+        '''
+        The magnitude of the values in the median_house_value column
+        seem perfectly reasonable (between $100k and $500k.).
+        
+        If the question is about the median_income column, that range is very 
+        low and the values look either pre-processed or at least presented in a 
+        unit different than USD.
+        
+        The Hands-On Machine Learning book suggests that 1 unit corresponds to 
+        roughly $10,000 which seems reasonable looking at the range.
+        '''
     )
 
 
@@ -107,4 +117,4 @@ if __name__ == '__main__':
     housing_data = pd.read_csv(f'{HOUSING_PATH}/housing.csv')
 
     task_5(housing_data)
-    # task_5f(housing_data)
+    task_5f(housing_data)
