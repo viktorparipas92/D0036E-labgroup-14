@@ -34,24 +34,25 @@ def mean_2(array):
     return sum_ / len_
 
 
-def variance(array):
+def variance(array, biased=False):
     mean_value = mean(array)
     numerator = sum((element - mean_value)**2 for element in array)
-    return numerator / (len(array) - 1)
+    denominator = len(array) if biased else (len(array) - 1)
+    return numerator / denominator
 
 
-def variance_2(array):
+def variance_2(array, biased=False):
     mean_value = mean_2(array)
     sum_numerator = 0
-    sum_denominator = -1
+    sum_denominator = 0 if biased else -1
     for element in array:
         sum_numerator += (element - mean_value)**2
         sum_denominator += 1
     return sum_numerator / sum_denominator
 
 
-def standard_deviation(array):
-    return math.sqrt(variance(array))
+def standard_deviation(array, biased=False):
+    return math.sqrt(variance(array, biased))
 
 
 def median(array):
