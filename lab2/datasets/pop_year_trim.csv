@@ -1,0 +1,85 @@
+,region,level of education,2016,2017,2018,2019,2020
+0,01 Stockholm county,no information about level of educational attainment,36560,39554,42113,45984,47399
+1,01 Stockholm county,post secondary education,739424,759083,780086,798639,815468
+2,01 Stockholm county,primary and lower secondary education,254596,254036,254721,254916,254066
+4,01 Stockholm county,upper secondary education,616508,619697,619102,618354,616364
+5,03 Uppsala county,no information about level of educational attainment,3729,4244,4787,5272,5197
+6,03 Uppsala county,post secondary education,109558,112371,115469,118174,120953
+7,03 Uppsala county,primary and lower secondary education,42268,42370,42628,42881,42870
+9,03 Uppsala county,upper secondary education,108123,109670,110174,111227,112009
+10,04 Södermanland county,no information about level of educational attainment,2948,3272,3652,4038,4101
+11,04 Södermanland county,post secondary education,57884,59369,60789,61865,62861
+12,04 Södermanland county,primary and lower secondary education,44219,44216,44026,43941,43247
+14,04 Södermanland county,upper secondary education,99780,100318,100339,100345,100476
+15,05 Östergötland county,no information about level of educational attainment,4565,5140,5362,5643,5794
+16,05 Östergötland county,post secondary education,113978,117283,119769,122180,124378
+17,05 Östergötland county,primary and lower secondary education,61303,60755,60290,59371,58773
+19,05 Östergötland county,upper secondary education,146831,147511,147327,147079,146892
+20,06 Jönköping county,no information about level of educational attainment,3307,3777,4272,4682,4794
+21,06 Jönköping county,post secondary education,73668,76040,78010,79460,81054
+22,06 Jönköping county,primary and lower secondary education,53243,52619,52448,51969,51109
+24,06 Jönköping county,upper secondary education,119861,120604,120544,120588,120561
+25,07 Kronoberg county,no information about level of educational attainment,2361,2729,2948,3162,3111
+26,07 Kronoberg county,post secondary education,43876,45130,46345,47125,47929
+27,07 Kronoberg county,primary and lower secondary education,27167,26998,26866,26650,26309
+29,07 Kronoberg county,upper secondary education,63769,64376,64708,64769,64865
+30,08 Kalmar county,no information about level of educational attainment,2154,2536,2782,2937,3008
+31,08 Kalmar county,post secondary education,49867,51128,52072,52687,53452
+32,08 Kalmar county,primary and lower secondary education,35974,35808,35251,34464,33528
+34,08 Kalmar county,upper secondary education,84277,84738,84386,84164,84087
+35,09 Gotland county,no information about level of educational attainment,363,401,478,561,568
+36,09 Gotland county,post secondary education,12583,12977,13230,13519,13895
+37,09 Gotland county,primary and lower secondary education,8342,8231,8080,7870,7663
+39,09 Gotland county,upper secondary education,21348,21246,21203,21159,21142
+40,10 Blekinge county,no information about level of educational attainment,1510,1696,1859,1905,1870
+41,10 Blekinge county,post secondary education,36034,36866,37305,37554,37986
+42,10 Blekinge county,primary and lower secondary education,21951,21617,21287,20922,20328
+44,10 Blekinge county,upper secondary education,52629,52754,52625,52294,52063
+45,12 Skåne county,no information about level of educational attainment,18085,19757,21480,22975,23947
+46,12 Skåne county,post secondary education,353625,362937,371888,380544,390151
+47,12 Skåne county,primary and lower secondary education,175013,174437,174030,172877,171108
+49,12 Skåne county,upper secondary education,401450,403362,403365,402887,402138
+50,13 Halland county,no information about level of educational attainment,2707,3009,3159,3410,3598
+51,13 Halland county,post secondary education,76156,78504,80364,82087,83882
+52,13 Halland county,primary and lower secondary education,42155,42037,41789,41562,41106
+54,13 Halland county,upper secondary education,106806,107753,108420,108840,108921
+55,14 Västra Götaland county,no information about level of educational attainment,18985,20830,22002,23770,24732
+56,14 Västra Götaland county,post secondary education,438321,449991,461658,472341,482804
+57,14 Västra Götaland county,primary and lower secondary education,224689,222534,220366,218427,215292
+59,14 Västra Götaland county,upper secondary education,529328,531072,530477,528807,527383
+60,17 Värmland county,no information about level of educational attainment,3322,3582,3825,4055,4141
+61,17 Värmland county,post secondary education,60427,61737,62805,63924,65045
+62,17 Värmland county,primary and lower secondary education,36630,36052,35249,34445,33510
+64,17 Värmland county,upper secondary education,100477,100652,100333,99774,99211
+65,18 Örebro county,no information about level of educational attainment,2882,3222,3467,3687,3857
+66,18 Örebro county,post secondary education,66285,68424,70266,71705,72906
+67,18 Örebro county,primary and lower secondary education,41939,41686,41299,40682,39693
+69,18 Örebro county,upper secondary education,102156,102849,102758,102608,102080
+70,19 Västmanland county,no information about level of educational attainment,2962,3227,3490,3773,3873
+71,19 Västmanland county,post secondary education,59405,60939,62289,63396,64529
+72,19 Västmanland county,primary and lower secondary education,37614,37356,37137,36944,36522
+74,19 Västmanland county,upper secondary education,92075,92595,92618,92428,92103
+75,20 Dalarna county,no information about level of educational attainment,2894,3119,3326,3467,3475
+76,20 Dalarna county,post secondary education,56046,57334,58139,58842,59530
+77,20 Dalarna county,primary and lower secondary education,41228,40807,39958,39165,38250
+79,20 Dalarna county,upper secondary education,103985,104090,103821,103268,102556
+80,21 Gävleborg county,no information about level of educational attainment,2705,2877,3049,3227,3279
+81,21 Gävleborg county,post secondary education,55709,56180,57606,58312,59235
+82,21 Gävleborg county,primary and lower secondary education,44332,43752,43060,42202,41082
+84,21 Gävleborg county,upper secondary education,103040,103916,102944,102582,102202
+85,22 Västernorrland county,no information about level of educational attainment,2065,2273,2438,2654,2651
+86,22 Västernorrland county,post secondary education,52380,53191,53770,54256,54876
+87,22 Västernorrland county,primary and lower secondary education,33009,32407,31897,31347,30657
+89,22 Västernorrland county,upper secondary education,88890,88643,87785,86943,86158
+90,23 Jämtland county,no information about level of educational attainment,1094,1235,1347,1472,1460
+91,23 Jämtland county,post secondary education,28169,28930,29457,29985,30605
+92,23 Jämtland county,primary and lower secondary education,15614,15563,15422,15098,14800
+94,23 Jämtland county,upper secondary education,47880,47620,47488,47188,47011
+95,24 Västerbotten county,no information about level of educational attainment,2174,2322,2699,3047,3086
+96,24 Västerbotten county,post secondary education,72820,74109,75409,76566,77816
+97,24 Västerbotten county,primary and lower secondary education,28367,27973,27598,27160,26640
+99,24 Västerbotten county,upper secondary education,90502,90514,90429,89976,89890
+100,25 Norrbotten county,no information about level of educational attainment,2090,2091,2284,2567,2618
+101,25 Norrbotten county,post secondary education,55721,56470,56988,57262,57884
+102,25 Norrbotten county,primary and lower secondary education,28813,27973,27438,26680,26020
+104,25 Norrbotten county,upper secondary education,96707,96503,95789,95000,94352
