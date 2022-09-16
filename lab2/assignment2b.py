@@ -6,7 +6,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-from lab2.functions import my_csv_loader
+from lab1 import functions
+from lab2.functions import groupby_aggregate, groupby, my_csv_loader
 
 
 def assert_approx_equal(value1, value2, relative_threshold=1e-5):
@@ -102,9 +103,20 @@ if __name__ == '__main__':
     criterion. e.g. every X iterations then a value should be printed
     """)
 
-    mean_income_by_region_per_age_group = income_data.groupby('age')[
-        ['region', '2020']
-    ].mean().reset_index()
+    mean_income_by_region_per_age_group = groupby_aggregate(
+        groupby(income_data, 'age'),
+        cols=['2020'],
+        fn_aggregate=functions.mean,
+        group_column_name='age'
+    )
+    assert(
+        mean_income_by_region_per_age_group.shape ==
+        income_data.groupby('age')[
+            ['region', '2020']
+        ].mean().reset_index().shape
+    )
+    print(mean_income_by_region_per_age_group.head())
+
     ages = mean_income_by_region_per_age_group.age
     ages_numeric = pd.to_numeric(ages.str.strip('+ years'))
     mean_incomes_2020 = mean_income_by_region_per_age_group['2020']

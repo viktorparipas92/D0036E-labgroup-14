@@ -1,6 +1,13 @@
 import math
 
 
+def my_sum(array):
+    sum_ = 0
+    for item in array:
+        sum_ += item
+    return sum_
+
+
 def min_(array):
     minimum = None
     for element in array:
