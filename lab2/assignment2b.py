@@ -6,6 +6,8 @@ import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
+from lab2.functions import my_csv_loader
+
 
 def assert_approx_equal(value1, value2, relative_threshold=1e-5):
     absolute_threshold = relative_threshold * max(abs(value1), abs(value2))
@@ -22,7 +24,6 @@ def convert_data_to_numpy_arrays(
 
 
 def perform_linear_regression(x, y):
-    # Calculate the coefficients the old-fashioned way
     X_b, y = convert_data_to_numpy_arrays(x, y)
     theta_best = np.linalg.inv(X_b.T.dot(X_b)).dot(X_b.T).dot(y)
     print(
@@ -70,59 +71,65 @@ def check_mean_squared_error(X_b, y, theta_best):
     return my_mean_squared_error
 
 
-if __name__ == '__main__':
-    income_data = pd.read_csv(
-        'datasets/income_data.csv', encoding='unicode_escape'
-    )
-    print(income_data)
-
-    print("""
-    When is it more appropriate to use the debugger for inspecting variable 
-    values, and when would you prefer to use a print function? Identify:
-
-    One case when it is more convenient/efficient to use the debugger. 
-    One case when it is more convenient/efficient to use a printout.
-    From Kristofer:
-
-    A debugger is more convenient when understanding control flow, 
-    e.g. which if-statements/branches that gets executed
-    A printout could be more efficient, for example, in a loop that executes a 
-    large amount of times and it is only for a certain criteria that debug 
-    information is needed, 
-    e.g. every X iterations then a value should be printed
-    """)
-
-    mean_income_by_region = income_data.groupby('age')[
-        ['region', '2020']
-    ].mean().reset_index()
-    ages = mean_income_by_region.age
-    ages_numeric = pd.to_numeric(ages.str.strip('+ years'))
-    mean_incomes_2020 = mean_income_by_region['2020']
-
-    X_b, y, theta_best = perform_linear_regression(
-        ages_numeric, mean_incomes_2020
-    )
-    plot_linear_regression(ages_numeric, mean_incomes_2020, theta_best)
-    predicted_incomes = make_predictions_with_linear_regression(
+def run_pipeline(features, target):
+    X_b, y, theta_best = perform_linear_regression(features, target)
+    plot_linear_regression(features, target, theta_best)
+    _ = make_predictions_with_linear_regression(
         np.array([35, 80]), theta_best
     )
-    my_mean_squared_error = check_mean_squared_error(X_b, y, theta_best)
+    _ = check_mean_squared_error(X_b, y, theta_best)
+
+
+DATASET_PATH = 'datasets/income_data.csv'
+
+
+if __name__ == '__main__':
+    encoding = 'unicode_escape'
+    column_names, rows = my_csv_loader(
+        DATASET_PATH, encoding=encoding, type_map={'2020': float}
+    )
+    income_data = pd.DataFrame(rows, columns=column_names)
+    assert(
+        income_data.shape == pd.read_csv(DATASET_PATH, encoding=encoding).shape
+    )
+    print(income_data.head())
+
+    print("""
+    A debugger is more convenient when understanding control flow, 
+    e.g. which if-statements/branches get executed
+    A printout could be more efficient, for example, in a loop that executes a 
+    large number of times if the debug information is only needed on a certain
+    criterion. e.g. every X iterations then a value should be printed
+    """)
+
+    mean_income_by_region_per_age_group = income_data.groupby('age')[
+        ['region', '2020']
+    ].mean().reset_index()
+    ages = mean_income_by_region_per_age_group.age
+    ages_numeric = pd.to_numeric(ages.str.strip('+ years'))
+    mean_incomes_2020 = mean_income_by_region_per_age_group['2020']
+
+    run_pipeline(ages_numeric, mean_incomes_2020)
 
     print("Now repeat for 30+-year-olds only")
     ages_30_and_above = ages_numeric[ages_numeric > 30]
     ages_30_and_above_indices = ages_30_and_above.index
     mean_incomes_for_30_and_above = mean_incomes_2020[ages_30_and_above_indices]
 
-    X_b, y, theta_best = perform_linear_regression(
-        ages_30_and_above, mean_incomes_for_30_and_above
+    run_pipeline(ages_30_and_above, mean_incomes_for_30_and_above)
+    print(
+        "The newly calculated MSE value is about 21% of that of the original "
+        "model. That means the linear regression is a better fit for this "
+        "truncated dataset."
+        "When we fit the linear regressor to only the incomes of people above "
+        "30, the resulting slope is higher (in an absolute sense), i.e. the "
+        "modified model predicts a much higher income for a 35-year-old, "
+        "and a slightly lower income for an 80-year-old. "
+        "Looking at the graph, our model seems to have less variance and more "
+        "bias, that is to say it is underfitting the data. One possible "
+        "improvement could be to try to fit a higher-order polynomial instead "
+        "of a straight line."
     )
-    plot_linear_regression(
-        ages_30_and_above, mean_incomes_for_30_and_above, theta_best
-    )
-    predicted_incomes = make_predictions_with_linear_regression(
-        np.array([35, 80]), theta_best
-    )
-    my_mean_squared_error = check_mean_squared_error(X_b, y, theta_best)
 
 
 
