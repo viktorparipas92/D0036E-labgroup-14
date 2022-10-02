@@ -1,8 +1,16 @@
+import importlib
 from matplotlib import pyplot as plt
 import pandas as pd
 
-from lab1 import functions
-from lab2.functions import groupby_aggregate, groupby, my_csv_loader
+lab1_functions = importlib.import_module(
+    'D0036E-labgroup-14.lab1.functions', None
+)
+lab2_functions = importlib.import_module(
+    'D0036E-labgroup-14.lab2.functions', None
+)
+groupby_aggregate = lab2_functions.groupby_aggregate
+groupby = lab2_functions.groupby
+my_csv_loader = lab2_functions.my_csv_loader
 
 
 LAST_FIVE_YEARS = ['2016', '2017', '2018', '2019', '2020']
@@ -28,12 +36,12 @@ if __name__ == '__main__':
     norrbotten_college_graduate_populations = college_graduates[
         college_graduates.region == '25 Norrbotten county'
     ][LAST_FIVE_YEARS].values[0]
-    my_mean = functions.mean(norrbotten_college_graduate_populations)
+    my_mean = lab1_functions.mean(norrbotten_college_graduate_populations)
     assert(my_mean == norrbotten_college_graduate_populations.mean())
     print('Mean population with post-secondary education in Norrbotten '
           f'region in the last 5 years: {my_mean:.1f}')
 
-    my_stdev = functions.standard_deviation(
+    my_stdev = lab1_functions.standard_deviation(
         norrbotten_college_graduate_populations, biased=True
     )
     assert(my_stdev == norrbotten_college_graduate_populations.std())
@@ -46,7 +54,7 @@ if __name__ == '__main__':
     population_sums_by_region = groupby_aggregate(
         groupby(regional_populations_by_year, 'region'),
         cols=LAST_FIVE_YEARS,
-        fn_aggregate=functions.my_sum,
+        fn_aggregate=lab1_functions.my_sum,
         group_column_name='region'
     )
     assert(
@@ -56,7 +64,7 @@ if __name__ == '__main__':
             ].sum().reset_index().shape
     )
     population_sums_by_region['mean population'] = [
-        functions.mean(p) for p
+        lab1_functions.mean(p) for p
         in population_sums_by_region[LAST_FIVE_YEARS].values
     ]
     print(population_sums_by_region.head())
