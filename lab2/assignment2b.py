@@ -1,13 +1,25 @@
+import importlib
 from typing import Tuple
 
-from matplotlib import pyplot as plt
+import matplotlib
 import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression
 from sklearn.metrics import mean_squared_error
 
-from lab1 import functions
-from lab2.functions import groupby_aggregate, groupby, my_csv_loader
+matplotlib.use('TkAgg')
+from matplotlib import pyplot as plt
+
+
+lab1_functions = importlib.import_module(
+    'D0036E-labgroup-14.lab1.functions', None
+)
+lab2_functions = importlib.import_module(
+    'D0036E-labgroup-14.lab2.functions', None
+)
+groupby_aggregate = lab2_functions.groupby_aggregate
+groupby = lab2_functions.groupby
+my_csv_loader = lab2_functions.my_csv_loader
 
 
 def assert_approx_equal(value1, value2, relative_threshold=1e-5):
@@ -106,7 +118,7 @@ if __name__ == '__main__':
     mean_income_by_region_per_age_group = groupby_aggregate(
         groupby(income_data, 'age'),
         cols=['2020'],
-        fn_aggregate=functions.mean,
+        fn_aggregate=lab1_functions.mean,
         group_column_name='age'
     )
     assert(
@@ -132,7 +144,7 @@ if __name__ == '__main__':
     print(
         "The newly calculated MSE value is about 21% of that of the original "
         "model. That means the linear regression is a better fit for this "
-        "truncated dataset."
+        "truncated dataset. "
         "When we fit the linear regressor to only the incomes of people above "
         "30, the resulting slope is higher (in an absolute sense), i.e. the "
         "modified model predicts a much higher income for a 35-year-old, "
