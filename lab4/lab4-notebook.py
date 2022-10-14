@@ -137,11 +137,9 @@ run_task3_pipeline(image_astronaut_grayscale)
 
 
 # + [markdown] pycharm={"name": "#%% md\n"}
-# We can see that the resolution of the image decreased according to the scaling factor.
+# As can be seen in the images above, the scaling will affect the resolution of the image. __Rescale__ operation resizes an image by a given scaling factor. The scaling factor can either be a single floating point value, or multiple values - one along each axis. The __Resize__ operation does the same thing but instead of providing a scaling factor we can supply the dimension of the output image instead.
 #
-# __Rescale__ operation resizes an image by a given scaling factor. The scaling factor can either be a single floating point value, or multiple values - one along each axis.
-#
-# __Resize__ serves the same purpose, but allows to specify an output image shape instead of a scaling factor.
+# We also see the effect of using anti aliasing (for resize) and not (for rescale).
 
 # + [markdown] pycharm={"name": "#%% md\n"}
 # # Task 4
@@ -186,6 +184,8 @@ run_task4_pipeline(image_astronaut_grayscale, FILENAME_ASTRONAUT, threshold=0.4)
 # ## Template matching
 #
 # The code below first defines the coin (with manually given limits), then matches the template against the image, this time loaded from scikit-image directly. The `result` outputs a value for each pixel depending on how well it matches the template. The location of the maximum of this function corresponds to the center of the coin on the image.
+#
+# The template matching function in skimage is using cross correlation to find instances of the template image in the full image. The result of the image matching is the pixel wise correlation with the template image. The maximum/peak of the result corresponds to the center of the coin in the image.
 #
 # The first subplot just shows the template (i.e. the coin) in isolation.
 #
