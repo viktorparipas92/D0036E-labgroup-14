@@ -16,7 +16,7 @@ lab2_functions = importlib.import_module(
 )
 groupby_aggregate = lab2_functions.groupby_aggregate
 groupby = lab2_functions.groupby
-my_csv_loader = lab2_functions.my_csv_loader
+load_csv = lab2_functions.load_csv
 
 
 def assert_approx_equal(value1, value2, relative_threshold=1e-5):
@@ -25,7 +25,7 @@ def assert_approx_equal(value1, value2, relative_threshold=1e-5):
 
 
 def convert_data_to_numpy_arrays(
-        features: pd.DataFrame, target: pd.DataFrame
+    features: pd.DataFrame, target: pd.DataFrame
 ) -> Tuple[np.array, np.array]:
     features_nparray = features.to_numpy()
     X_b = np.c_[np.ones(len(features_nparray)), features_nparray]
@@ -95,7 +95,7 @@ DATASET_PATH = 'datasets/income_data.csv'
 
 if __name__ == '__main__':
     encoding = 'unicode_escape'
-    column_names, rows = my_csv_loader(
+    column_names, rows = load_csv(
         DATASET_PATH, encoding=encoding, type_map={'2020': float}
     )
     income_data = pd.DataFrame(rows, columns=column_names)
@@ -112,17 +112,17 @@ if __name__ == '__main__':
     criterion. e.g. every X iterations then a value should be printed
     """)
 
-    mean_income_by_region_per_age_group = groupby_aggregate(
+    mean_income_by_region_per_age_group: pd.DataFrame = groupby_aggregate(
         groupby(income_data, 'age'),
-        cols=['2020'],
-        fn_aggregate=lab1_functions.mean,
-        group_column_name='age'
+        columns=['2020'],
+        aggregate_function=lab1_functions.mean,
+        group_column_name='age',
     )
     assert(
         mean_income_by_region_per_age_group.shape ==
         income_data.groupby('age')[
             ['region', '2020']
-        ].mean().reset_index().shape
+        ].mean(numeric_only=True).reset_index().shape
     )
     print(mean_income_by_region_per_age_group.head())
 

@@ -1,9 +1,16 @@
+from typing import Generator, List, Dict, Callable, Union, Optional, Tuple
+
 import pandas as pd
 import re
 
 
-def my_csv_loader(filename, type_map=None, debug=False, encoding=None):
-    def split_line(line):
+def load_csv(
+    filename: str,
+    type_map: Dict = None,
+    debug: bool = False,
+    encoding=None,
+):
+    def split_line(line: str) -> List:
         """
         Split a comma separated line observing quotation
         """
@@ -20,21 +27,16 @@ def my_csv_loader(filename, type_map=None, debug=False, encoding=None):
     type_map = type_map or {}
 
     with open(filename, encoding=encoding) as file:
-        # First line contains column names
         column_names.extend(split_line(next(file)))
-
         if debug:
             print(column_names)
 
-        # Map column name to zero-based column index
         for index, column_name in enumerate(column_names):
             column_names_to_index[column_name] = index
 
-        # Now load all the rows
         for line in file:
             values = split_line(line)
 
-            # All the values are now in string, perform type mapping (if any)
             for column_name, type_ in type_map.items():
                 column_index = column_names_to_index[column_name]
                 values[column_index] = type_(values[column_index])
@@ -46,56 +48,48 @@ def my_csv_loader(filename, type_map=None, debug=False, encoding=None):
     return column_names, rows
 
 
-def groupby(df, groupby):
-    """
-    Function to group by a given column
-    """
-    # We need to first sort on the grouping column
-    df = df.sort_values(groupby)
+def groupby(dataframe: pd.DataFrame, column_name: str) -> Generator[Tuple, None, None]:
+    dataframe = dataframe.sort_values(column_name)
 
-    last = None
+    current_value = None
     group = []
-    # Iterate through the dataset by row.
-    # Whenever a new value is found for the grouping column, that means
-    # a new group has started and we emit/yield the last group
-    for _, row in df.iterrows():
-        # Check if we are on a new group
-        if row[groupby] != last and len(group) > 0:
-            # Return the group
-            yield last, group
+    for _, row in dataframe.iterrows():
+        if row[column_name] != current_value and len(group) > 0:
+            yield current_value, group
             group = []
 
-        last = row[groupby]
+        current_value = row[column_name]
         group.append(row)
 
-    if len(group) > 0:
-        yield last, group
+    if group:
+        yield current_value, group
 
 
-def groupby_aggregate(df_group, cols, fn_aggregate, group_column_name=None):
+def groupby_aggregate(
+    groups: Generator[Tuple, None, None],
+    columns: List,
+    aggregate_function: Callable,
+    group_column_name: Optional[str] = None,
+) -> pd.DataFrame:
     """
     Function to perform an aggregate operation on columns in an existing
     grouping and return a new data frame
     """
-    groupnames = []
-    col_sums = [[] for col in cols]
+    group_names = []
+    column_aggregates = [[] for _ in columns]
 
-    # Iterate through all the gruops and apply the aggregate function to it
-    for groupname, group in df_group:
-        # Apply aggregate to each supplied column
-        for i, col in enumerate(cols):
-            sum = fn_aggregate([row[col] for row in group])
-            col_sums[i].append(sum)
+    for group_name, group in groups:
+        for i, column in enumerate(columns):
+            aggregate = aggregate_function([row[column] for row in group])
+            column_aggregates[i].append(aggregate)
 
-        groupnames.append(groupname)
+        group_names.append(group_name)
 
-    # Re-format the resulting data so that we can easily load it
-    # into a Pandas Data Frame
-    d = {
-        'group' if group_column_name is None else group_column_name: groupnames
+    result: Dict = {
+        'group' if group_column_name is None
+        else group_column_name: group_names
     }
+    for column, aggregate in zip(columns, column_aggregates):
+        result[column] = aggregate
 
-    for col, sums in zip(cols, col_sums):
-        d[col] = sums
-
-    return pd.DataFrame(d)
+    return pd.DataFrame(result)

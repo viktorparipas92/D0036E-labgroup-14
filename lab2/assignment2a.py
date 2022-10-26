@@ -2,6 +2,7 @@ import importlib
 from matplotlib import pyplot as plt
 import pandas as pd
 
+
 lab1_functions = importlib.import_module(
     'D0036E-labgroup-14.lab1.functions', None
 )
@@ -10,7 +11,7 @@ lab2_functions = importlib.import_module(
 )
 groupby_aggregate = lab2_functions.groupby_aggregate
 groupby = lab2_functions.groupby
-my_csv_loader = lab2_functions.my_csv_loader
+load_csv = lab2_functions.load_csv
 
 
 LAST_FIVE_YEARS = ['2016', '2017', '2018', '2019', '2020']
@@ -21,7 +22,7 @@ if __name__ == '__main__':
     type_map = {
         '2016': int, '2017': int, '2018': int, '2019': int, '2020': int
     }
-    column_names, rows = my_csv_loader(DATASET_PATH, type_map)
+    column_names, rows = load_csv(DATASET_PATH, type_map)
     regional_populations_by_year = pd.DataFrame(rows, columns=column_names)
     assert(
         regional_populations_by_year.shape == pd.read_csv(DATASET_PATH).shape
@@ -53,8 +54,8 @@ if __name__ == '__main__':
     # Plot the mean of the regional populations over the last 5 years
     population_sums_by_region = groupby_aggregate(
         groupby(regional_populations_by_year, 'region'),
-        cols=LAST_FIVE_YEARS,
-        fn_aggregate=lab1_functions.my_sum,
+        columns=LAST_FIVE_YEARS,
+        aggregate_function=lab1_functions.my_sum,
         group_column_name='region'
     )
     assert(
